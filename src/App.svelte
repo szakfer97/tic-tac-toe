@@ -2,11 +2,18 @@
   let currentPlayer = "X";
   let winner: string | null = null;
   let board = Array(9).fill(null);
+  let xWins = 0;
+  let oWins = 0;
 
   const handleMove = (/** @type {number} */ index: number) => {
     if (!board[index] && !winner) {
       board[index] = currentPlayer;
       winner = calculateWinner();
+      if (winner === "X") {
+        xWins++;
+      } else if (winner === "O") {
+        oWins++;
+      }
       currentPlayer = currentPlayer === "X" ? "O" : "X";
     }
   };
@@ -38,6 +45,12 @@
     winner = null;
     board = Array(9).fill(null);
   };
+
+  const resetAll = () => {
+    xWins = 0;
+    oWins = 0;
+    resetGame();
+  };
 </script>
 
 <main>
@@ -53,9 +66,16 @@
     {/each}
   </div>
 
+  <div class="scoreboard">
+    <p>X Wins: {xWins}</p>
+    <p>O Wins: {oWins}</p>
+  </div>
+
   {#if winner}
-    <button on:click={resetGame}>Reset</button>
+    <button class="reset-button" on:click={resetGame}>Reset</button>
   {/if}
+
+  <button class="reset-all-button" on:click={resetAll}>Reset All</button>
 </main>
 
 <style>
@@ -81,9 +101,23 @@
     font-size: 36px;
     background-color: lightblue;
     cursor: pointer;
+    border: none;
   }
 
-  button {
+  .scoreboard {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .scoreboard p {
+    margin: 0 10px;
+    font-size: 18px;
+  }
+
+  .reset-button,
+  .reset-all-button {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 18px;
@@ -92,5 +126,10 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+  }
+
+  .reset-all-button {
+    background-color: #f44336;
+    margin-left: 10px;
   }
 </style>
