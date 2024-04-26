@@ -125,8 +125,9 @@
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 5px;
+    padding: 16px;
     margin: 20px auto;
-    border: 2px solid black;
+    border: 2px solid lightblue;
     width: 310px;
   }
 
@@ -135,6 +136,7 @@
     justify-content: center;
     align-items: center;
     font-size: 36px;
+
     background-color: lightblue;
     cursor: pointer;
     border: none;
@@ -172,9 +174,8 @@
     transition: background-color 0.3s;
   }
 
-  .reset-button:hover,
-  .reset-all-button:hover {
-    background-color: #45a049;
+  .reset-button:hover {
+    background-color: #d32f2f;
     transform: translateY(-2px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
@@ -185,7 +186,7 @@
   }
 
   .reset-all-button:hover {
-    background-color: #d32f2f;
+    background-color: #4caf50;
     transform: translateY(-1px);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
