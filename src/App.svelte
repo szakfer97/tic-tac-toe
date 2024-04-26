@@ -4,6 +4,7 @@
   let board = Array(9).fill(null);
   let xWins = 0;
   let oWins = 0;
+  let draws = 0;
 
   const handleMove = (/** @type {number} */ index: number) => {
     if (!board[index] && !winner) {
@@ -13,6 +14,8 @@
         xWins++;
       } else if (winner === "O") {
         oWins++;
+      } else if (board.every((cell) => cell !== null)) {
+        draws++;
       }
       currentPlayer = currentPlayer === "X" ? "O" : "X";
     }
@@ -49,12 +52,19 @@
   const resetAll = () => {
     xWins = 0;
     oWins = 0;
+    draws = 0;
     resetGame();
   };
 </script>
 
 <main>
-  <h1>{winner ? `Winner: ${winner}` : `Next player: ${currentPlayer}`}</h1>
+  <h1>
+    {winner
+      ? `Winner: Player ${winner}`
+      : board.every((cell) => cell !== null)
+        ? "It's a Draw!"
+        : `Next player: ${currentPlayer}`}
+  </h1>
 
   <div class="board">
     {#each board as cell, index (index)}
@@ -69,13 +79,14 @@
   <div class="scoreboard">
     <p>X Wins: {xWins}</p>
     <p>O Wins: {oWins}</p>
+    <p>Draws: {draws}</p>
   </div>
 
-  {#if winner}
-    <button class="reset-button" on:click={resetGame}>Reset</button>
+  {#if winner || board.every((cell) => cell !== null)}
+    <button class="reset-button" on:click={resetGame}>Reset board</button>
   {/if}
 
-  <button class="reset-all-button" on:click={resetAll}>Reset All</button>
+  <button class="reset-all-button" on:click={resetAll}>Reset all</button>
 </main>
 
 <style>
@@ -91,7 +102,7 @@
     gap: 5px;
     margin: 20px auto;
     border: 2px solid black;
-    width: 320px;
+    width: 310px;
   }
 
   .cell {
