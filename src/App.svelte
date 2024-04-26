@@ -1,13 +1,10 @@
-<script>
+<script lang="ts">
   let currentPlayer = "X";
-  /**
-   * @type {null}
-   */
-  let winner = null;
+  let winner: string | null = null;
   let board = Array(9).fill(null);
 
-  const handleMove = (/** @type {number} */ index) => {
-    if (board[index] === null && !winner) {
+  const handleMove = (/** @type {number} */ index: number) => {
+    if (!board[index] && !winner) {
       board[index] = currentPlayer;
       winner = calculateWinner();
       currentPlayer = currentPlayer === "X" ? "O" : "X";
@@ -49,7 +46,9 @@
   <div class="board">
     {#each board as cell, index (index)}
       <button class="cell" on:click={() => handleMove(index)}>
-        {cell}
+        {#if cell !== null}
+          {cell}
+        {/if}
       </button>
     {/each}
   </div>
