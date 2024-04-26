@@ -19,7 +19,7 @@
       } else {
         currentPlayer = currentPlayer === "X" ? "O" : "X";
         if (currentPlayer === "O") {
-          setTimeout(computerMove, 500); // Delay for the computer's move
+          setTimeout(computerMove, 500);
         }
       }
     }
@@ -64,7 +64,7 @@
     winner = null;
     board = Array(9).fill(null);
     if (currentPlayer === "O") {
-      setTimeout(computerMove, 500); // Delay for the computer's move
+      setTimeout(computerMove, 500);
     }
   };
 
@@ -143,6 +143,8 @@
 
   .cell:hover {
     background-color: lightcyan;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
   .scoreboard {
@@ -173,6 +175,8 @@
   .reset-button:hover,
   .reset-all-button:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
   .reset-all-button {
@@ -182,5 +186,7 @@
 
   .reset-all-button:hover {
     background-color: #d32f2f;
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 </style>
