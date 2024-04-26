@@ -1,5 +1,5 @@
 <script lang="ts">
-  let currentPlayer = "X";
+  let currentPlayer = Math.random() < 0.5 ? "X" : "O";
   let winner: string | null = null;
   let board = Array(9).fill(null);
   let xWins = 0;
@@ -10,14 +10,18 @@
     if (!board[index] && !winner) {
       board[index] = currentPlayer;
       winner = calculateWinner();
-      if (winner === "X") {
+      if (!winner && board.every((cell) => cell !== null)) {
+        draws++;
+      } else if (winner === "X") {
         xWins++;
       } else if (winner === "O") {
         oWins++;
-      } else if (board.every((cell) => cell !== null)) {
-        draws++;
+      } else {
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        if (currentPlayer === "O") {
+          setTimeout(computerMove, 500); // Delay for the computer's move
+        }
       }
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
     }
   };
 
@@ -43,10 +47,25 @@
     return null;
   };
 
+  const computerMove = () => {
+    if (!winner) {
+      let emptyCells = board.reduce((acc, cell, index) => {
+        if (!cell) acc.push(index);
+        return acc;
+      }, []);
+
+      let randomIndex = Math.floor(Math.random() * emptyCells.length);
+      handleMove(emptyCells[randomIndex]);
+    }
+  };
+
   const resetGame = () => {
-    currentPlayer = "X";
+    currentPlayer = Math.random() < 0.5 ? "X" : "O";
     winner = null;
     board = Array(9).fill(null);
+    if (currentPlayer === "O") {
+      setTimeout(computerMove, 500); // Delay for the computer's move
+    }
   };
 
   const resetAll = () => {
@@ -63,7 +82,9 @@
       ? `Winner: Player ${winner}`
       : board.every((cell) => cell !== null)
         ? "It's a Draw!"
-        : `Next player: ${currentPlayer}`}
+        : currentPlayer === "X"
+          ? "Your Turn"
+          : "Computer's Turn"}
   </h1>
 
   <div class="board">
@@ -77,8 +98,8 @@
   </div>
 
   <div class="scoreboard">
-    <p>X Wins: {xWins}</p>
-    <p>O Wins: {oWins}</p>
+    <p>Your Wins: {xWins}</p>
+    <p>Computer Wins: {oWins}</p>
     <p>Draws: {draws}</p>
   </div>
 
