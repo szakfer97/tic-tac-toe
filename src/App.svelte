@@ -92,7 +92,11 @@
 <style>
   main {
     font-family: sans-serif;
+    background-color: #f0f0f0;
     text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   .board {
@@ -113,6 +117,11 @@
     background-color: lightblue;
     cursor: pointer;
     border: none;
+    transition: background-color 0.3s;
+  }
+
+  .cell:hover {
+    background-color: lightcyan;
   }
 
   .scoreboard {
@@ -137,10 +146,20 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .reset-button:hover,
+  .reset-all-button:hover {
+    background-color: #45a049;
   }
 
   .reset-all-button {
     background-color: #f44336;
     margin-left: 10px;
+  }
+
+  .reset-all-button:hover {
+    background-color: #d32f2f;
   }
 </style>
