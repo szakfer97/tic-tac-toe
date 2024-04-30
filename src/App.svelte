@@ -43,7 +43,6 @@
         return board[a];
       }
     }
-
     return null;
   };
 
@@ -149,6 +148,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
+  h1 {
+    font-size: 24px;
+    color: rgb(68, 68, 68);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
   .scoreboard {
     margin-top: 20px;
     display: flex;
@@ -159,6 +164,9 @@
   .scoreboard p {
     margin: 0 10px;
     font-size: 18px;
+    font-weight: bold;
+    color: rgb(68, 68, 68);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   .reset-button,
