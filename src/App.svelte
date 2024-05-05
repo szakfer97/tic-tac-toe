@@ -1,7 +1,22 @@
 <script lang="ts">
-  let currentPlayer = Math.random() < 0.5 ? "X" : "O";
+  let currentPlayer = "X";
   let winner: string | null = null;
   let board = Array(9).fill(null);
+  const computerMove = () => {
+    if (!winner) {
+      let emptyCells = board.reduce((acc, cell, index) => {
+        if (!cell) acc.push(index);
+        return acc;
+      }, []);
+
+      let randomIndex = Math.floor(Math.random() * emptyCells.length);
+      handleMove(emptyCells[randomIndex]);
+    }
+  };
+
+  if (Math.random() < 0.5) {
+    setTimeout(computerMove, 500);
+  }
   let xWins = 0;
   let oWins = 0;
   let draws = 0;
@@ -44,18 +59,6 @@
       }
     }
     return null;
-  };
-
-  const computerMove = () => {
-    if (!winner) {
-      let emptyCells = board.reduce((acc, cell, index) => {
-        if (!cell) acc.push(index);
-        return acc;
-      }, []);
-
-      let randomIndex = Math.floor(Math.random() * emptyCells.length);
-      handleMove(emptyCells[randomIndex]);
-    }
   };
 
   const resetGame = () => {
@@ -124,7 +127,7 @@
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 5px;
-    padding: 16px;
+    padding: 6px;
     margin: 20px auto;
     border: 2px solid lightblue;
     width: 310px;
