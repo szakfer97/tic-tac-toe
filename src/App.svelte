@@ -1,28 +1,14 @@
 <script lang="ts">
-  let currentPlayer = "X";
+  let currentPlayer = Math.random() < 0.5 ? "X" : "O";
   let winner: string | null = null;
   let board = Array(9).fill(null);
-  const computerMove = () => {
-    if (!winner) {
-      let emptyCells = board.reduce((acc, cell, index) => {
-        if (!cell) acc.push(index);
-        return acc;
-      }, []);
-
-      let randomIndex = Math.floor(Math.random() * emptyCells.length);
-      handleMove(emptyCells[randomIndex]);
-    }
-  };
-
-  if (Math.random() < 0.5) {
-    setTimeout(computerMove, 500);
-  }
   let xWins = 0;
   let oWins = 0;
   let draws = 0;
+  let startGame = true;
 
   const handleMove = (/** @type {number} */ index: number) => {
-    if (!board[index] && !winner) {
+    if (!board[index] && !winner && startGame === false) {
       board[index] = currentPlayer;
       winner = calculateWinner();
       if (!winner && board.every((cell) => cell !== null)) {
@@ -38,6 +24,11 @@
         }
       }
     }
+  };
+
+  const startGameClick = () => {
+    startGame = false;
+    resetGame();
   };
 
   const calculateWinner = () => {
@@ -61,6 +52,18 @@
     return null;
   };
 
+  const computerMove = () => {
+    if (!winner) {
+      let emptyCells = board.reduce((acc, cell, index) => {
+        if (!cell) acc.push(index);
+        return acc;
+      }, []);
+
+      let randomIndex = Math.floor(Math.random() * emptyCells.length);
+      handleMove(emptyCells[randomIndex]);
+    }
+  };
+
   const resetGame = () => {
     currentPlayer = Math.random() < 0.5 ? "X" : "O";
     winner = null;
@@ -74,6 +77,7 @@
     xWins = 0;
     oWins = 0;
     draws = 0;
+    startGame = true;
     resetGame();
   };
 </script>
@@ -104,6 +108,10 @@
     <p>Computer Wins: {oWins}</p>
     <p>Draws: {draws}</p>
   </div>
+
+  {#if startGame}
+    <button class="start-button" on:click={startGameClick}>Start game</button>
+  {/if}
 
   {#if winner || board.every((cell) => cell !== null)}
     <button class="reset-button" on:click={resetGame}>Reset board</button>
@@ -172,6 +180,7 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   }
 
+  .start-button,
   .reset-button,
   .reset-all-button {
     margin-top: 20px;
@@ -185,6 +194,7 @@
     transition: background-color 0.3s;
   }
 
+  .start-button:hover,
   .reset-button:hover {
     background-color: #d32f2f;
     transform: translateY(-2px);
